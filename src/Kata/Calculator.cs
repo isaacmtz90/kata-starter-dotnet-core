@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Kata
 {
@@ -9,7 +10,13 @@ namespace Kata
             if(string.IsNullOrEmpty(userInput))
                 return 0;
 
-            return Convert.ToInt32(userInput);
+            var strings = userInput.Split(',');
+            var numbers = strings.Select( stringNumber => Convert.ToInt32(stringNumber)).ToArray();
+            if (numbers.Length == 1)
+            {
+                return numbers[0];
+            }
+            return numbers[0] + numbers[1];
         }
     }
 }
