@@ -17,12 +17,8 @@ namespace Kata
             {
                 var inputParts = input.Split('\n');
                 var customDelimiterDefinition = inputParts[0].Replace("//","");
-                
-                if (customDelimiterDefinition.Contains("["))
-                {
-                    customDelimiterDefinition = customDelimiterDefinition.Replace("[", "").Replace("]", "");
-                }
-                delimiters = new[] {customDelimiterDefinition};
+                var customDelimiters = customDelimiterDefinition.Split("[").Select( delimiter => delimiter.Replace("]","")).ToArray();
+                delimiters = customDelimiters;
                 input = inputParts[1];
             }
             
