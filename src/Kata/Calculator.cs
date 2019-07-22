@@ -21,6 +21,11 @@ namespace Kata
             
             var strings = input.Split(delimiters);
             var numbers = strings.Select( stringNumber => Convert.ToInt32(stringNumber)).ToArray();
+            var negatives = numbers.Where(number => number < 0).ToArray();
+            if (negatives.Any())
+            {
+                throw new Exception($"negatives not allowed: {negatives[0]}");
+            }
             return numbers.Sum();
         }
     }
