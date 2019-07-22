@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace Kata.Spec.when_calculating_the_sum
@@ -58,26 +59,37 @@ namespace Kata.Spec.when_calculating_the_sum
         Because of = () => { _result = _systemUnderTest.Add("1,2\n3"); };
 
         It should_return_the_sum_of_the_numbers = () => { _result.Should().Be(6); };
-        
+
         static Calculator _systemUnderTest;
         static int _result;
     }
 
     public class when_the_input_has_a_custom_delimiter
     {
-        Establish _context = () =>
-        {
-            _systemUnderTest = new Calculator();
-        };
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
         Because of = () => { _result = _systemUnderTest.Add("//;\n1;3"); };
 
         It should_return_the_sum_of_the_numbers = () => { _result.Should().Be(4); };
-        private static Calculator _systemUnderTest;
-        private static int _result;
+        static Calculator _systemUnderTest;
+        static int _result;
     }
 
-//    6. Given the user input is multiple numbers with a custom single-character delimiter when calculating the sum then it should return the sum of all the numbers. (example “//;\n1;2” should return 3)
+    public class when_the_input_contains_one_negative_number
+    {
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
+
+        Because of = () => { _result = Catch.Exception(() => _systemUnderTest.Add("1,2,-3")); };
+
+        It should_throw_an_exception_containing_the_negative_number = () =>
+        {
+            _result.Message.Should().Be("negatives not allowed: -3");
+        };
+
+        static Calculator _systemUnderTest;
+        static Exception _result;
+    }
+
 //    7. Given the user input contains one negative number when calculating the sum then it should throw an exception "negatives not allowed: x" (where x is the negative number).
 //    8. Given the user input contains multiple negative numbers mixed with positive numbers when calculating the sum then it should throw an exception "negatives not allowed: x, y, z" (where x, y, z are only the negative numbers). 
 //    9. Given the user input contains numbers larger than 1000 when calculating the sum it should only sum the numbers less than 1001. (example 2 + 1001 = 2)
