@@ -112,23 +112,21 @@ namespace Kata.Spec.when_calculating_the_sum
         Because of = () => { _result = _systemUnderTest.Add("3,1000,5\n1002"); };
 
         It should_return_a_sum_of_the_numbers_less_than_1001 = () => { _result.Should().Be(1008); };
-        
+
         static Calculator _systemUnderTest;
         static int _result;
     }
 
     public class when_the_input_has_a_multi_character_custom_separator
     {
-        Establish _context = () =>
-        {
-            _systemUnderTest = new Calculator();
-        };
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
         Because of = () => { _result = _systemUnderTest.Add("//[***]\n1***2***3"); };
 
         It should_return_the_sum_of_the_valid_numbers = () => { _result.Should().Be(6); };
-        private static Calculator _systemUnderTest;
-        private static int _result;
+        
+        static Calculator _systemUnderTest;
+        static int _result;
     }
 
 //    10. Given the user input is multiple numbers with a custom multi-character delimiter when calculating the sum then it should return the sum of all the numbers. (example: “//[***]\n1***2***3” should return 6)

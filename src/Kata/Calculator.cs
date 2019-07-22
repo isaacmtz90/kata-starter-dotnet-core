@@ -11,15 +11,22 @@ namespace Kata
                 return 0;
             
             var input = userInput;
-            var delimiters = new [] {',','\n'};
+            var delimiters = new [] {",","\n"};
 
             if (input.StartsWith("//"))
             {
-                delimiters = new[] {input[2]};
-                input = userInput.Substring(4);
+                var inputParts = input.Split('\n');
+                var customDelimiterDefinition = inputParts[0].Replace("//","");
+                
+                if (customDelimiterDefinition.Contains("["))
+                {
+                    customDelimiterDefinition = customDelimiterDefinition.Replace("[", "").Replace("]", "");
+                }
+                delimiters = new[] {customDelimiterDefinition};
+                input = inputParts[1];
             }
             
-            var strings = input.Split(delimiters);
+            var strings = input.Split(delimiters, StringSplitOptions.None);
             var numbers = strings.Select( stringNumber => Convert.ToInt32(stringNumber)).ToList();
             var negatives = numbers.Where(number => number < 0).ToArray();
             if (negatives.Any())
