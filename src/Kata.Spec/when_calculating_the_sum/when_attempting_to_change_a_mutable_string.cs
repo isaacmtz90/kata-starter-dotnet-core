@@ -92,20 +92,31 @@ namespace Kata.Spec.when_calculating_the_sum
 
     public class when_the_input_has_multiple_negative_numbers
     {
-        Establish _context = () =>
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
+
+        Because of = () => { _result = Catch.Exception(() => _systemUnderTest.Add("1,2,-3,-4")); };
+
+        It should_throw_an_exception_listing_them_all = () =>
         {
-            _systemUnderTest = new Calculator();
+            _result.Message.Should().Be("negatives not allowed: -3, -4");
         };
 
-        Because of = () => { _result = Catch.Exception( () =>  _systemUnderTest.Add("1,2,-3,-4")); };
-
-        It should_throw_an_exception_listing_them_all = () => { _result.Message.Should().Be("negatives not allowed: -3, -4"); };
-        private static Calculator _systemUnderTest;
-        private static Exception _result;
+        static Calculator _systemUnderTest;
+        static Exception _result;
     }
 
+    public class when_the_user_input_contains_number_larger_than_1000
+    {
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
-//    8. Given the user input contains multiple negative numbers mixed with positive numbers when calculating the sum then it should throw an exception "negatives not allowed: x, y, z" (where x, y, z are only the negative numbers). 
+        Because of = () => { _result = _systemUnderTest.Add("3,1000,5\n1002"); };
+
+        It should_return_a_sum_of_the_numbers_less_than_1001 = () => { _result.Should().Be(1008); };
+        
+        static Calculator _systemUnderTest;
+        static int _result;
+    }
+
 //    9. Given the user input contains numbers larger than 1000 when calculating the sum it should only sum the numbers less than 1001. (example 2 + 1001 = 2)
 //    10. Given the user input is multiple numbers with a custom multi-character delimiter when calculating the sum then it should return the sum of all the numbers. (example: “//[***]\n1***2***3” should return 6)
 //    11. Given the user input is multiple numbers with multiple custom delimiters when calculating the sum then it should return the sum of all the numbers. (example “//[*][%]\n1*2%3” should return 6)
