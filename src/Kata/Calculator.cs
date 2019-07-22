@@ -12,11 +12,7 @@ namespace Kata
 
             var strings = userInput.Split(',');
             var numbers = strings.Select( stringNumber => Convert.ToInt32(stringNumber)).ToArray();
-            if (numbers.Length == 1)
-            {
-                return numbers[0];
-            }
-            return numbers[0] + numbers[1];
+            return numbers.Sum();
         }
     }
 }

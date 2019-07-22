@@ -8,36 +8,30 @@ namespace Kata.Spec.when_calculating_the_sum
         static Calculator _systemUnderTest;
         static int _result;
 
-        Establish context = () => 
+        Establish context = () =>
             _systemUnderTest = new Calculator();
 
-        Because of = () => 
+        Because of = () =>
             _result = _systemUnderTest.Add("");
 
-        It should_return_zero = () => 
+        It should_return_zero = () =>
             _result.Should().Be(0);
     }
 
     public class when_the_input_is_one_number
     {
-        Establish _context = () =>
-        {
-            _systemUnderTest = new Calculator();
-        };
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
         Because of = () => { _result = _systemUnderTest.Add("3"); };
 
         It should_return_that_number = () => { _result.Should().Be(3); };
-        private static Calculator _systemUnderTest;
-        private static int _result;
+        static Calculator _systemUnderTest;
+        static int _result;
     }
 
     public class when_user_input_is_two_numbers
     {
-        Establish _context = () =>
-        {
-            _systemUnderTest = new Calculator();
-        };
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
         Because of = () => { _result = _systemUnderTest.Add("1,2"); };
 
@@ -48,19 +42,27 @@ namespace Kata.Spec.when_calculating_the_sum
 
     public class when_user_input_is_many_numbers
     {
-        Establish _context = () =>
-        {
-            _systemUnderTest = new Calculator();
-        };
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
         Because of = () => { _result = _systemUnderTest.Add("1,2,3"); };
 
         It should_return_the_sum_of_all_numbers = () => { _result.Should().Be(6); };
-        private static Calculator _systemUnderTest;
-        private static int _result;
+        static Calculator _systemUnderTest;
+        static int _result;
     }
-//    3. Given the user input is two numbers when calculating the sum then it should return the sum of those numbers. (example "1,2" should equal 3)
-//    4. Given the user input is an unknown amount of numbers when calculating the sum then it should return the sum of all the numbers. (example "1,2,3" should equal 6)
+
+    public class when_the_user_input_has_new_lines_for_delimiters
+    {
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
+
+        Because of = () => { _result = _systemUnderTest.Add("1,2\n3"); };
+
+        It should_return_the_sum_of_the_numbers = () => { _result.Should().Be(6); };
+        
+        static Calculator _systemUnderTest;
+        static int _result;
+    }
+
 //    5. Given the user input is multiple numbers with new line and comma delimiters when calculating the sum then it should return the sum of all the numbers. (example "1\n2,3" should equal 6)
 //    6. Given the user input is multiple numbers with a custom single-character delimiter when calculating the sum then it should return the sum of all the numbers. (example “//;\n1;2” should return 3)
 //    7. Given the user input contains one negative number when calculating the sum then it should throw an exception "negatives not allowed: x" (where x is the negative number).
@@ -68,5 +70,4 @@ namespace Kata.Spec.when_calculating_the_sum
 //    9. Given the user input contains numbers larger than 1000 when calculating the sum it should only sum the numbers less than 1001. (example 2 + 1001 = 2)
 //    10. Given the user input is multiple numbers with a custom multi-character delimiter when calculating the sum then it should return the sum of all the numbers. (example: “//[***]\n1***2***3” should return 6)
 //    11. Given the user input is multiple numbers with multiple custom delimiters when calculating the sum then it should return the sum of all the numbers. (example “//[*][%]\n1*2%3” should return 6)
-
 }
