@@ -5,19 +5,28 @@ namespace Kata.Spec.when_calculating_the_sum
 {
     public class when_the_user_input_is_empty
     {
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
+
+        Because of = () => { _result = _systemUnderTest.Add(""); };
+
+        It should_return_0 = () => { _result.Should().Be(0); };
+        static Calculator _systemUnderTest;
+        static int _result;
+    }
+
+    public class when_user_input_is_one_number
+    {
         Establish _context = () =>
         {
             _systemUnderTest = new Calculator();
         };
 
-        Because of = () => { _result = _systemUnderTest.Add(""); };
+        Because of = () => { _result = _systemUnderTest.Add("1"); };
 
-        It should_return_0 = () => { _result.Should().Be(0); };
-        private static Calculator _systemUnderTest;
-        private static int _result;
+        It should_return_that_number = () => { _result.Should().Be(1); };
+        static Calculator _systemUnderTest;
+        static int _result;
     }
-
-//    1. Given the user input is empty when calculating the sum then it should return zero.
 //    2. Given the user input is one number when calculating the sum then it should return the same number. (example "3" should equal 3)
 //    3. Given the user input is two numbers when calculating the sum then it should return the sum of those numbers. (example "1,2" should equal 3)
 //    4. Given the user input is an unknown amount of numbers when calculating the sum then it should return the sum of all the numbers. (example "1,2,3" should equal 6)
