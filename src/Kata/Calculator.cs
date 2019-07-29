@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection.Metadata;
 
 namespace Kata
 {
@@ -7,11 +8,13 @@ namespace Kata
     {
         public int Add(string userinput)
         {
-            if (userinput.Any())
-            {
-                return Int32.Parse(userinput);
-            }
-            return 0;
+            if (string.IsNullOrEmpty(userinput))
+                return 0;
+
+            var nums = userinput.Split(",").Select(int.Parse).ToArray();
+            if (nums.Length == 1) return nums[0];
+            
+            return nums[0]+nums[1];
         }
     }
 }
