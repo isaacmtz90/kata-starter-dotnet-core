@@ -38,10 +38,7 @@ namespace Kata.Spec.when_calculating_the_sum
 
     public class when_summing_an_unknown_amount_of_numbers
     {
-        Establish _context = () =>
-        {
-            _systemUnderTest = new Calculator();
-        };
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
         Because of = () => { _result = _systemUnderTest.Add("1,2,3"); };
 
@@ -52,16 +49,27 @@ namespace Kata.Spec.when_calculating_the_sum
 
     public class when_input_has_newline_delimiter
     {
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
+
+        Because of = () => { _result = _systemUnderTest.Add("1,5\n3"); };
+
+        It should_sum_the_numbers = () => { _result.Should().Be(9); };
+        static Calculator _systemUnderTest;
+        static int _result;
+    }
+
+    public class when_using_a_custom_delimiter
+    {
         Establish _context = () =>
         {
             _systemUnderTest = new Calculator();
         };
 
-        Because of = () => { _result = _systemUnderTest.Add("1,5\n3"); };
+        Because of = () => { _result = _systemUnderTest.Add("//;\n1;2;3"); };
 
-        It should_sum_the_numbers = () => { _result.Should().Be(9); };
-        private static Calculator _systemUnderTest;
-        private static int _result;
+        It should_return_the_sum_of_the_numbers = () => { _result.Should().Be(6); };
+        static Calculator _systemUnderTest;
+        static int _result;
     }
 //    6. Given the user input is multiple numbers with a custom single-character delimiter when calculating the sum then it should return the sum of all the numbers. (example “//;\n1;2” should return 3)
 //    7. Given the user input contains one negative number when calculating the sum then it should throw an exception "negatives not allowed: x" (where x is the negative number).
