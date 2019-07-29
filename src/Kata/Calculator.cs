@@ -10,7 +10,7 @@ namespace Kata
         {
             if (string.IsNullOrEmpty(userinput))
                 return 0;
-            var separator = new[]{",", "\n"};
+            var separator = new[] {",", "\n"};
             var validinput = userinput;
             if (userinput.StartsWith("//"))
             {
@@ -19,6 +19,9 @@ namespace Kata
             }
 
             var nums = validinput.Split(separator, StringSplitOptions.None).Select(int.Parse).ToArray();
+            var negatives = nums.Where(x => x < 0);
+            if (negatives.Any()) throw new Exception("negatives not allowed: -3");
+
             return nums.Sum();
         }
     }
