@@ -13,8 +13,8 @@ namespace Kata
             if (s.StartsWith("//"))
             {
                 var parts = s.Split("\n");
-                var delimiterDef = parts[0].Replace("//","").Replace("[","").Replace("]","");
-                separator = new [] {delimiterDef};
+                var delimiterDef = parts[0].Replace("//","").Replace("[","").Split("]");
+                separator = delimiterDef;
                 s = parts[1];
             }
 
