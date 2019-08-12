@@ -78,6 +78,24 @@ namespace Kata.Spec
         static Calculator _systemUnderTest;
         static int _result;
     }
+
+    public class when_given_a_custom_delimiter
+    {
+        Establish _context = () =>
+        {
+            _systemUnderTest = new Calculator();
+        };
+
+        Because of = () => { _result = _systemUnderTest.Add("//;\n1;2"); };
+
+        It should_split_properly_and_return_the_sum = () =>
+        {
+            _result.Should().Be(3);
+            
+        };
+        private static Calculator _systemUnderTest;
+        private static int _result;
+    }
 }
 
 /*
