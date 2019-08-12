@@ -146,6 +146,20 @@ namespace Kata.Spec
         private static Calculator _systemUnderTest;
         private static int _result;
     }
+
+    public class when_using_multiple_custom_delimiters
+    {
+        Establish _context = () =>
+        {
+            _systemUnderTest = new Calculator();
+        };
+
+        Because of = () => { _result = _systemUnderTest.Add("//[*][%]\n1*2%3"); };
+
+        It should_return_the_sum = () => { _result.Should().Be(6); };
+        static Calculator _systemUnderTest;
+        static int _result;
+    }
 }
 
 /*

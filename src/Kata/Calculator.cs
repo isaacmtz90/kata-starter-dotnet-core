@@ -16,7 +16,13 @@ namespace Kata
             {
                 var parts = input.Split("\n");
                 input = parts[1];
-                separator = new[] {parts[0].Replace("//", "")};
+                separator = new[]
+                {
+                    parts[0].Replace("//", "")
+                        .Replace("[","")
+                        .Replace("]","")
+                    
+                };
             }
 
             var numbers = input.Split(separator, StringSplitOptions.None).Select((x) => int.Parse(x)).ToArray();
