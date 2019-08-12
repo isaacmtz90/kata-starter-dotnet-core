@@ -20,6 +20,11 @@ namespace Kata
             }
 
             var numbers = input.Split(separator, StringSplitOptions.None).Select((x) => int.Parse(x)).ToArray();
+            var negatives = numbers.Where(x => x < 0);
+            if (negatives.Any())
+            {
+                throw  new Exception("negatives not allowed: -3");
+            }
             return numbers.Sum();
         }
     }
