@@ -8,30 +8,28 @@ namespace Kata
         public int Add(string s = "")
         {
             var input = s;
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
                 return 0;
-            
-            var separator = new [] {",","\n"};
+
+            var separator = new[] {",", "\n"};
             if (input.StartsWith("//"))
             {
                 var parts = input.Split("\n");
                 input = parts[1];
-                separator = new[]
-                {
+                separator =
                     parts[0].Replace("//", "")
-                        .Replace("[","")
-                        .Replace("]","")
-                    
-                };
+                        .Replace("[", "")
+                        .Split("]");
             }
 
             var numbers = input.Split(separator, StringSplitOptions.None).Select((x) => int.Parse(x)).ToArray();
             var negatives = numbers.Where(x => x < 0);
             if (negatives.Any())
             {
-                throw  new Exception($"negatives not allowed: {string.Join(", ", negatives)}");
+                throw new Exception($"negatives not allowed: {string.Join(", ", negatives)}");
             }
-            return numbers.Where(x=> x <=1000).Sum();
+
+            return numbers.Where(x => x <= 1000).Sum();
         }
     }
 }
