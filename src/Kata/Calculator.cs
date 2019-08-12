@@ -25,7 +25,7 @@ namespace Kata
             {
                 throw  new Exception($"negatives not allowed: {string.Join(", ", negatives)}");
             }
-            return numbers.Sum();
+            return numbers.Where(x=> x <=1000).Sum();
         }
     }
 }
