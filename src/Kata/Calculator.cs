@@ -8,9 +8,8 @@ namespace Kata
         {
             if (string.IsNullOrEmpty(s)) return 0;
             var numbers = s.Split(",").Select(int.Parse);
-            if (numbers.Count() == 1) return numbers.First();
 
-            return numbers.First() + numbers.Last();
+            return numbers.Sum();
         }
     }
 }
