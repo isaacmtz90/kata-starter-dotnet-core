@@ -69,11 +69,25 @@ namespace Kata.Spec
         static Calculator _systemUnderTest;
         static int _result;
     }
+
+    public class when_input_is_delimited_by_newline
+    {
+        Establish _context = () =>
+        {
+            _systemUnderTest = new Calculator();
+        };
+
+        Because of = () => { _result = _systemUnderTest.Add("1,2\n3"); };
+
+        It should_split_accordingly_and_return_the_sum = () => { _result.Should().Be(6); };
+        private static Calculator _systemUnderTest;
+        private static int _result;
+    }
 }
 
 
 
-// 4. Given the user input is an unknown amount of numbers when calculating the sum then it should return the sum of all the numbers. (example "1,2,3" should equal 6)
+
 // 5. Given the user input is multiple numbers with new line and comma delimiters when calculating the sum then it should return the sum of all the numbers. (example "1\n2,3" should equal 6)
 // 6. Given the user input is multiple numbers with a custom single-character delimiter when calculating the sum then it should return the sum of all the numbers. (example “//;\n1;2” should return 3)
 // 7. Given the user input contains one negative number when calculating the sum then it should throw an exception "negatives not allowed: x" (where x is the negative number).

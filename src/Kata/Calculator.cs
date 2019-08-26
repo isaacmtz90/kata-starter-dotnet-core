@@ -13,7 +13,7 @@ namespace Kata
                 return int.Parse(s);
             }
 
-            return numbers.First() + numbers.Last();
+            return numbers.Sum();
         }
     }
 }
