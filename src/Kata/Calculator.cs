@@ -16,7 +16,8 @@ namespace Kata
                 input = s.Split("\n")[1];
             }
 
-            var numbers = input.Split(delimiters, StringSplitOptions.None).Select(int.Parse);
+            var numbers = input.Split(delimiters, StringSplitOptions.None).Select(int.Parse)
+                .Where(x=> x<=1000);
             var negatives = numbers.Where(x => x < 0);
             if (negatives.Any())
             {
