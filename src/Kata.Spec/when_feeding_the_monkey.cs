@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace Kata.Spec
@@ -96,6 +97,20 @@ namespace Kata.Spec
         It should_sum_the_numbers = () => { _result.Should().Be(6); };
         static Calculator _systemUnderTest;
         static int _result;
+    }
+
+    public class when_input_contains_a_negative_number
+    {
+        Establish _context = () =>
+        {
+            _systemUnderTest = new Calculator();
+        };
+
+        Because of = () => { _result = Catch.Exception(() => _systemUnderTest.Add("1,-3")); };
+
+        It should_throw_an_exception_listing_that_number = () => { _result.Message.Should().Be("negatives not allowed: -3"); };
+        private static Exception _result;
+        private static Calculator _systemUnderTest;
     }
 }
 
