@@ -16,7 +16,7 @@ namespace Kata
                 return  numbers.First();
             }
 
-            return numbers.First() + numbers.Last();
+            return numbers.Sum();
         }
     }
 }
