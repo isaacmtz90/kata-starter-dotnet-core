@@ -19,7 +19,7 @@ namespace Kata
                 s = parts[1];
             }
             
-            var numbers = s.Split(separator, StringSplitOptions.None).Select(int.Parse);
+            var numbers = s.Split(separator, StringSplitOptions.None).Select(int.Parse).Where(x=> x<=1000);
             var negatives = numbers.Where(x => x < 0).ToArray();
             
             if (negatives.Any())
