@@ -5,17 +5,22 @@ namespace Kata
 {
     public class Calculator
     {
-        public int Add(string s="")
+        public int Add(string s = "")
         {
-            if(string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(s))
                 return 0;
 
-            var numbers = s.Split( new []{",", "\n"}, StringSplitOptions.None ).Select((int.Parse));
-            if (numbers.Count() == 1)
+            var separator = new[] {",", "\n"};
+
+            if (s.StartsWith("//"))
             {
-                
-                return  numbers.First();
+                var parts = s.Split("\n");
+                separator = new[] {parts[0].Replace("//", "")};
+                s = parts[1];
             }
+            
+            var numbers = s.Split(separator, StringSplitOptions.None).Select(int.Parse);
+            if (numbers.Count() == 1) return numbers.First();
 
             return numbers.Sum();
         }
