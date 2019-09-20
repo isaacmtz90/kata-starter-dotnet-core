@@ -11,27 +11,26 @@ namespace Kata
                 return 0;
 
             var separator = new[] {",", "\n"};
+            var inputString = s;
 
             if (s.StartsWith("//"))
             {
                 var parts = s.Split("\n");
-                separator = new[]
-                {
+                separator =
                     parts[0].Replace("//", "")
-                        .Replace("[","")
-                        .Replace("]","")
-                };
-                s = parts[1];
+                        .Replace("[", "")
+                        .Split("]");
+                
+                inputString = parts[1];
             }
-            
-            var numbers = s.Split(separator, StringSplitOptions.None).Select(int.Parse).Where(x=> x<=1000);
+
+            var numbers = inputString.Split(separator, StringSplitOptions.None).Select(int.Parse).Where(x=> x<=1000).ToArray();
             var negatives = numbers.Where(x => x < 0).ToArray();
             
             if (negatives.Any())
             {
                 throw new Exception($"negatives not allowed: {string.Join(", ", negatives)}");
             }
-            if (numbers.Count() == 1) return numbers.First();
 
             return numbers.Sum();
         }
