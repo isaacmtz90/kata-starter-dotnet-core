@@ -86,12 +86,9 @@ namespace Kata.Spec
 
     public class when_user_input_includes_one_negative_number
     {
-        Establish _context = () =>
-        {
-            _systemUnderTest = new Calculator();
-        };
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
-        Because of = () => { _result = Catch.Exception(()=> _systemUnderTest.Add("1,-2,3")); };
+        Because of = () => { _result = Catch.Exception(() => _systemUnderTest.Add("1,-2,3")); };
 
         It should_throw_an_exception = () => { _result.Message.Should().Be("negatives not allowed: -2"); };
         static Calculator _systemUnderTest;
@@ -100,24 +97,22 @@ namespace Kata.Spec
 
     public class when_input_contains_multiple_negative_numbers
     {
-        Establish _context = () =>
-        {
-            _systemUnderTest = new Calculator();
-        };
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
         Because of = () => { _result = Catch.Exception(() => _systemUnderTest.Add("-2,-1,4")); };
 
-        It should_throw_an_exception_listing_them_all = () => { _result.Message.Should().Be("negatives not allowed: -2, -1"); };
-        private static Exception _result;
-        private static Calculator _systemUnderTest;
+        It should_throw_an_exception_listing_them_all = () =>
+        {
+            _result.Message.Should().Be("negatives not allowed: -2, -1");
+        };
+
+        static Exception _result;
+        static Calculator _systemUnderTest;
     }
 
     public class when_user_input_includes_numbers_larger_than_1000
     {
-        Establish _context = () =>
-        {
-            _systemUnderTest = new Calculator();
-        };
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
 
         Because of = () => { _result = _systemUnderTest.Add("1,2,3,1001"); };
 
@@ -128,18 +123,28 @@ namespace Kata.Spec
 
     public class when_input_contains_a_single_custom_multicharachter_delimiter
     {
+        Establish _context = () => { _systemUnderTest = new Calculator(); };
+
+        Because of = () => { _result = _systemUnderTest.Add("//[###]\n2###3###4"); };
+
+        It should_split_and_return_the_sum = () => { _result.Should().Be(9); };
+        static Calculator _systemUnderTest;
+        static int _result;
+    }
+
+    public class when_using_mulitple_multichar_delimiters
+    {
         Establish _context = () =>
         {
             _systemUnderTest = new Calculator();
         };
 
-        Because of = () => { _result = _systemUnderTest.Add("//[###]\n2###3###4"); };
+        Because of = () => { _result = _systemUnderTest.Add("//[*][%&]\n1*2%&3"); };
 
-        It should_split_and_return_the_sum = () => { _result.Should().Be(9); };
-        private static Calculator _systemUnderTest;
-        private static int _result;
+        It should_return_the_sum = () => { _result.Should().Be(6); };
+        static Calculator _systemUnderTest;
+        static int _result;
     }
 }
 
-// 10. Given the user input is multiple numbers with a custom multi-character delimiter when calculating the sum then it should return the sum of all the numbers. (example: “//[***]\n1***2***3” should return 6)
 // 11. Given the user input is multiple numbers with multiple custom delimiters when calculating the sum then it should return the sum of all the numbers. (example “//[*][%]\n1*2%3” should return 6)
